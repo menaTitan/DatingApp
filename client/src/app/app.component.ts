@@ -10,7 +10,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   title = 'The Dating app';
-  users : any;
+  users : any; //data type can be anything.
   constructor(private http: HttpClient){}
 
   ngOnInit(){
