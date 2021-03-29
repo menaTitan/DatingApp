@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
@@ -13,10 +14,11 @@ export class RegisterComponent implements OnInit {
  
   //@Input() usersFromHomeComponent: any; // getting data from the parent component
   @Output() cancelRegister = new EventEmitter() //passing data to child to the parent component
-  model : any ={};
   registerForm: FormGroup;
   maxDate: Date;
-  constructor(private accountService: AccountService, private toastr: ToastrService, private fb: FormBuilder) { }
+  validationErrors: string[] = []; 
+  constructor(private accountService: AccountService, private toastr: ToastrService, 
+    private fb: FormBuilder, private router: Router ) { }
   ngOnInit(): void {
     this.intitializeForm();
     this.maxDate = new Date();
@@ -49,16 +51,13 @@ export class RegisterComponent implements OnInit {
   }
   register(){
     console.log(this.registerForm.value);
-    /*
-      this.accountService.register(this.model).subscribe(response =>{
-          console.log(JSON.stringify(response));
-          this.cancel();
+      this.accountService.register(this.registerForm.value).subscribe(response =>{
+          this.router.navigateByUrl('/members')
       }, error =>{
-          console.log(error);
-          this.toastr.error(error.error);
+          this.validationErrors = error;
       });
-      console.log(this.model);
-      */
+      console.log(this.registerForm.value);
+      
   }
 
   cancel(){
