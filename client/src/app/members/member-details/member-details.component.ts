@@ -2,6 +2,7 @@ import { PathLocationStrategy } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
+import { ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { MembersService } from 'src/app/_services/members.service';
 
@@ -15,7 +16,7 @@ export class MemberDetailsComponent implements OnInit {
   member: Member;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
-  constructor(private memberService : MembersService, private route: ActivatedRoute) { }
+  constructor(private memberService : MembersService, private route: ActivatedRoute, private toastr : ToastrService) { }
 
 
   ngOnInit(): void {
@@ -51,5 +52,11 @@ export class MemberDetailsComponent implements OnInit {
       this.galleryImages = this.getImages(); 
     });
   }
+
+  addLike(member: Member){
+    this.memberService.addLike(member.username).subscribe(() =>{
+      this.toastr.success(`You have liked ${member.knownAs}`);
+    });
+}
 
 }

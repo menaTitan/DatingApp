@@ -1,5 +1,6 @@
 
 using API.Entities;
+using DatingApp.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -12,5 +13,25 @@ namespace API.Data
         }
 
         public DbSet<AppUser> Users { get; set; }
+
+        public DbSet<UserLike> Likes {get; set;}
+
+        // if we did not do this, sometime get errors when try and add immigration.
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            //this is going to form the primary key for this particular table
+            builder.Entity<UserLike>().HasKey(k => new {k.SourceUserId, k.LikedUserId});
+            
+            // it means the source user can have many like users 
+            builder.Entity<UserLike>().HasOne(s => s.SourceUser).WithMany(l => l.LikedUsers)
+            .HasForeignKey(s => s.SourceUserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            // it means the liked user can have many like by users  
+            builder.Entity<UserLike>().HasOne(s => s.LikedUser).WithMany(l => l.LikedByUsers)
+            .HasForeignKey(s => s.LikedUserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
