@@ -1,0 +1,40 @@
+.img-circle{
+    max-height: 50px;
+}
+
+.delete {
+    border-radius: 4px;
+    background-color: #df382c;
+    border: none;
+    color: #fff;
+    text-align: center;
+    transition: all 0.5s;
+    cursor: pointer;
+    box-shadow: 0 10px 20px -8px rgba(0, 0, 0,.7);
+  }
+  
+  .delete{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .delete:after {
+    content: '»';
+    position: absolute;
+    opacity: 0;  
+    top: 14px;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .delete:hover{
+    padding-right: 24px;
+    padding-left:8px;
+  }
+  
+  .delete:hover:after {
+    opacity: 1;
+    right: 10px;
+  }
