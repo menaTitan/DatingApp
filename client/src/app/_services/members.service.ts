@@ -62,7 +62,6 @@ export class MembersService {
     const member = [...this.membersCache.values()]
     .reduce((arr, elem) => arr.concat(elem.result), [])
     .find((member: Member) => member.username === username); // it returns the first instance of a member
-    console.log(member);
     if(member){
       return of(member);
     }

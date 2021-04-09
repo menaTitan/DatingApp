@@ -4,6 +4,7 @@ import {map} from 'rxjs/operators';
 import { User } from '../_models/user';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PresenceService } from './presence.service';
 // services are singlton 
 // injectable mean that this servie can be injected into other components or other services in our application
 @Injectable({
@@ -13,7 +14,7 @@ export class AccountService {
   baseUrl = environment.apiUrl;
   private currentUserSource  = new ReplaySubject<User>(1); // 1 indicate the size of the buffer. We only need one user
   currentUser$ = this.currentUserSource.asObservable();
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private presence: PresenceService) { }
 
   login(model:any){
       return this.http.post(`${this.baseUrl}account/login`, model).pipe(
@@ -21,6 +22,7 @@ export class AccountService {
             const user = response;
             if(user){
                this.setCurrentUser(user);
+               this.presence.createHubConnection(user);
             }
             return user;
         })
@@ -32,6 +34,7 @@ export class AccountService {
         map((user : User)=> {
             if(user){
                this.setCurrentUser(user);
+               this.presence.createHubConnection(user);
             }
             return user;
         })
@@ -49,6 +52,7 @@ export class AccountService {
   logout(){
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+    this.presence.stopHubConnection();
   }
 
   getDecoderToken(token: string){
