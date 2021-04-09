@@ -9,11 +9,11 @@
            "Introduction": "Sunt esse aliqua ullamco in incididunt consequat commodo. Nisi ad esse elit ipsum commodo fugiat est ad. Incididunt nostrud incididunt nostrud sit excepteur occaecat.\r\n",
            "LookingFor": "Dolor anim cupidatat occaecat aliquip et Lorem ut elit fugiat. Mollit eu pariatur est sunt. Minim fugiat sit do dolore eu elit ex do id sunt. Qui fugiat nostrud occaecat nisi est dolor qui fugiat laborum cillum. Occaecat consequat ex mollit commodo ad irure cillum nulla velit ex pariatur veniam cupidatat. Officia veniam officia non deserunt mollit.\r\n",
            "Interests": "Sit sit incididunt proident velit.",
-           "City": "Arlanta",
-           "Country": "United States",
+           "City": "Trenton, Georgia",
+           "Country": "United States of America",
            "Photos": [
                {
-                   "Url": "https://randomuser.me/api/portraits/women/60.jpg",
+                   "Url": "https://res.cloudinary.com/dwcdphhgz/image/upload/v1616511410/tqz6buaqfv6qtb3ei88b.jpg",
                    "IsMain": true
                }
            ]
@@ -223,7 +223,11 @@
            "Photos": [
                {
                    "Url": "https://randomuser.me/api/portraits/men/60.jpg",
-                   "IsMain": true
+                   "IsMain": false
+               },
+               {
+                "Url": "https://res.cloudinary.com/dwcdphhgz/image/upload/c_crop,e_auto_color,q_100/v1616511558/olbqdf1q9k0jg05g9nco.jpg",
+                "IsMain": true
                }
            ]
        }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, JsonpClientBackend} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import { User } from '../_models/user';
 import { ReplaySubject } from 'rxjs';
@@ -39,6 +39,9 @@ export class AccountService {
   }
 
   setCurrentUser(user : User){
+    user.roles = [];
+    const roles = this.getDecoderToken(user.token).role;
+    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
@@ -46,5 +49,9 @@ export class AccountService {
   logout(){
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+  }
+
+  getDecoderToken(token: string){
+    return JSON.parse(atob(token.split('.')[1]));
   }
 }

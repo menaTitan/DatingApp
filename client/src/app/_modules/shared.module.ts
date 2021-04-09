@@ -12,6 +12,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimeagoModule } from 'ngx-timeago';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -31,7 +32,9 @@ import { TimeagoModule } from 'ngx-timeago';
     MDBBootstrapModule.forRoot(),
     ButtonsModule.forRoot(),
     TimeagoModule.forRoot(),
+    ModalModule.forRoot(),
     NgbModule
+    
    
 
   ],
@@ -47,7 +50,9 @@ import { TimeagoModule } from 'ngx-timeago';
     MDBBootstrapModule,
     ButtonsModule,
     TimeagoModule,
+    ModalModule,
     NgbModule
+   
   ]
 })
 export class SharedModule { }
