@@ -19,6 +19,10 @@ namespace API.Data
 
         public DbSet<Message> Messages{get; set;}
 
+        public DbSet<Group> Groups {get; set;}
+
+        public DbSet<Connection> Connections {get; set;}
+
         // if we did not do this, sometime get errors when try and add immigration.
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -21,20 +21,22 @@ export class MessageService {
   constructor(private http: HttpClient) { }
 
   createHubConnection(user: User, otherUsername: string){
-    this.hubConnection = new HubConnectionBuilder()
-    .withUrl(`${this.hubUrl}message?user=${otherUsername}`,{
+    this.hubConnection = new HubConnectionBuilder().withUrl(`${this.hubUrl}message?user=${otherUsername}`,{
       accessTokenFactory: () => user.token
     }).withAutomaticReconnect().build();
 
     this.hubConnection.start().catch(error => console.log("this is the error " + error));
-    this.hubConnection.on('ReceiveMessageThread', messages =>{
+
+    this.hubConnection.on('ReceiveMessageThread', messages => {
       this.messageThreadSource.next(messages);
     })
+
     this.hubConnection.on("NewMessage", message => {
-      this.messageThread$.pipe(take(1)).subscribe(messages =>{
+      this.messageThread$.pipe(take(1)).subscribe(messages => {
         this.messageThreadSource.next([...messages, message])
       })
     })
+
   }
 
   stopHubConnection(){
@@ -48,13 +50,11 @@ export class MessageService {
     return getPaginatedResult<Message[]>(this.baseUrl + 'messages', params, this.http);
   }
 
-  getMessageThread(username: string)
-  {
+  getMessageThread(username: string){
     return this.http.get<Message[]>(this.baseUrl + 'messages/thread/' + username);
   }
 
-  async sendMessage(username: string, content: string)
-  {
+  async sendMessage(username: string, content: string){
    // return this.http.post<Message>(`${this.baseUrl}messages`, {recipientUsername: username, content});
     return this.hubConnection.invoke('SendMessage', {recipientUsername: username, content})
     .catch(error => console.log(error));
@@ -63,4 +63,5 @@ export class MessageService {
   deleteMessage(id: number){
     return this.http.delete(`${this.baseUrl}messages/${id}`);
   }
+  
 }
