@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using API.Interfaces;
 using DatingApp.API.Extensions;
 using DatingApp.API.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -15,10 +16,10 @@ namespace DatingApp.API.Helpers
             if(!resultContext.HttpContext.User.Identity.IsAuthenticated) return;
 
             var userId= resultContext.HttpContext.User.GetUserId();
-            var repo = resultContext.HttpContext.RequestServices.GetService<IUserRepository>();
-            var user = await repo.GetUserByIdAsync(userId);
-            user.LastActive = DateTime.Now;
-            await repo.SaveAllAsync();
+            var uow = resultContext.HttpContext.RequestServices.GetService<IUnitOfWork>();
+            var user = await uow.UserRepository.GetUserByIdAsync(userId);
+            user.LastActive = DateTime.UtcNow;
+            await uow.Complete();
 
         }
     }
