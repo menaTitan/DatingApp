@@ -2,6 +2,10 @@ namespace API.Entities
 {
     public class Connection
     {
+        public Connection()
+        {
+            
+        }
         public Connection(string connectionId, string username)
         {
             ConnectionId = connectionId;

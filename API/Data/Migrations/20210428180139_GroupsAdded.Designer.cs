@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210423204659_GroupsAdded")]
+    [Migration("20210428180139_GroupsAdded")]
     partial class GroupsAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -352,7 +352,7 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Connection", b =>
                 {
                     b.HasOne("API.Entities.Group", null)
-                        .WithMany("Connection")
+                        .WithMany("Connections")
                         .HasForeignKey("GroupName");
                 });
 
@@ -475,7 +475,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Group", b =>
                 {
-                    b.Navigation("Connection");
+                    b.Navigation("Connections");
                 });
 
             modelBuilder.Entity("DatingApp.API.Entities.AppRole", b =>

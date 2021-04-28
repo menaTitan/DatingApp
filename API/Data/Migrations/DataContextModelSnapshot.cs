@@ -350,7 +350,7 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Connection", b =>
                 {
                     b.HasOne("API.Entities.Group", null)
-                        .WithMany("Connection")
+                        .WithMany("Connections")
                         .HasForeignKey("GroupName");
                 });
 
@@ -473,7 +473,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Group", b =>
                 {
-                    b.Navigation("Connection");
+                    b.Navigation("Connections");
                 });
 
             modelBuilder.Entity("DatingApp.API.Entities.AppRole", b =>
