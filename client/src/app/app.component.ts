@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import { User } from './_models/user';
 import {AccountService} from './_services/account.service';
 import { PresenceService } from './_services/presence.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,7 @@ export class AppComponent implements OnInit {
    
   }
   getUsers(){
-    this.http.get('https://localhost:5001/api/users').subscribe(reponse => {
+    this.http.get(environment.apiUrl+'users').subscribe(reponse => {
       this.users = reponse;
 
     }, error=>{

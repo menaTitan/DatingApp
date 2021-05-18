@@ -25,6 +25,7 @@ namespace DatingApp.API.Controllers
             _mapper = mapper;
         }
 
+/*
         [HttpPost]
         public async Task<ActionResult<MessageDto>> CreateMessagge(CreateMessageDto createMessageDto)
         {
@@ -54,6 +55,7 @@ namespace DatingApp.API.Controllers
             return BadRequest("Failed to send");
 
         }
+*/
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessageForUser([FromQuery] MessageParams messageParams)
@@ -71,6 +73,7 @@ namespace DatingApp.API.Controllers
             var currentUsername = User.GetUsername();
             return Ok(await _unitOfWork.MessageRepository.GetMessageThread(currentUsername, username));
         }
+
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMessage(int id)

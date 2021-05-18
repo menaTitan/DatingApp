@@ -7,31 +7,36 @@ import { ConfirmDialogComponent } from '../modals/confirm-dialog/confirm-dialog.
   providedIn: 'root'
 })
 export class ConfirmService {
-  bsModelRef : BsModalRef;
+  bsModelRef: BsModalRef;
+
   constructor(private modalService: BsModalService) { }
 
-  confirm(title = 'Confirmation',
-   message = 'Are you sure you want to do this?', btnOkText = 'Ok',  btnCancelText = 'Cancel'): Observable<boolean>{
-    const config = {
-      initialState:{
-        title,
-        message,
-        btnOkText,
-        btnCancelText
+  confirm(title = 'Confirmation', 
+    message = 'Are you sure you want to do this?', 
+    btnOkText = 'Ok', 
+    btnCancelText = 'Cancel'): Observable<boolean> {
+      const config = {
+        initialState: {
+          title, 
+          message,
+          btnOkText,
+          btnCancelText
+        }
       }
-    }
     this.bsModelRef = this.modalService.show(ConfirmDialogComponent, config);
     
-    return new Observable<boolean>(this.getResult);
+    return new Observable<boolean>(this.getResult());
   }
-  private getResult(){
+
+  private getResult() {
     return (observer) => {
-      const subscription = this.bsModelRef.onHidden.subscribe(()=>{
+      const subscription = this.bsModelRef.onHidden.subscribe(() => {
         observer.next(this.bsModelRef.content.result);
         observer.complete();
       });
-      return{
-        unsubscriber(){
+
+      return {
+        unsubscribe() {
           subscription.unsubscribe();
         }
       }

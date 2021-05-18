@@ -30,7 +30,7 @@
             <tr [hidden]="loading" *ngFor="let message of messages" 
                  routerLink='{{container === "Qutbox" 
                     ? "/members/"+message.recipientUsername 
-                    : "/members/"+ message.senderUsername}}' [queryParams]='{tab:3}'> 
+                    : "/members/"+ message.recipientUsername}}' [queryParams]='{tab:3}'> 
                 <td>{{message.content}}</td>
                 <td>
                     <div *ngIf="container === 'Outbox'">
@@ -56,12 +56,17 @@
         </table>
     </div>
     
-    <div clas="d-flex justify-content-center col-xs-1 center-block" *ngIf="pagination && !loading" 
-    style="width: 50%; margin-left: auto; margin-right: auto;">
-      <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
-                  [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
-              previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-      </pagination>
-    
+    <div class="d-flex justify-content-center" *ngIf="pagination">
+        <pagination 
+            [boundaryLinks]="true" 
+            [totalItems]="pagination.totalItems"
+            [itemsPerPage]="pagination.itemsPerPage"
+            [(ngModel)]="pagination.currentPage"
+            (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;" 
+            nextText="&rsaquo;" 
+            firstText="&laquo;" 
+            lastText="&raquo;">
+    </pagination>
     </div>
 </div>
