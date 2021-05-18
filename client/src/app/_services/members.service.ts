@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaderResponse, HttpHeaders, HttpParams } from '@angula
 import { Injectable } from '@angular/core';
 import { of, pipe } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import {Member} from '../_models/member';
 import { PaginatedResult } from '../_models/pagination';
 import { User } from '../_models/user';

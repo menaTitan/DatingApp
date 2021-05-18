@@ -3,7 +3,7 @@ import {HttpClient, JsonpClientBackend} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import { User } from '../_models/user';
 import { ReplaySubject } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { PresenceService } from './presence.service';
 // services are singlton 
 // injectable mean that this servie can be injected into other components or other services in our application
