@@ -61,5 +61,17 @@ namespace DatingApp.API.Controllers
             return Ok(users);
         }
         
+        [HttpDelete("{username}")]
+        public async Task <ActionResult> UnlikeUser(string username)
+        {
+            var sourceUserId = User.GetUserId();
+            var likedUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+            var sourceUser = await _unitOfWork.LikesRepository.GetUserWithLikes(sourceUserId);
+            var userlike = await _unitOfWork.LikesRepository.GetUserLike(sourceUserId, likedUser.Id);
+            if(userlike == null) return BadRequest("You already unlike this user.");
+            _unitOfWork.LikesRepository.DeleteLike(userlike);
+            if(await _unitOfWork.Complete()) return Ok();
+            return  BadRequest("Problem delecting your request.");
+        }
     }
 }

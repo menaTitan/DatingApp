@@ -22,6 +22,12 @@ namespace DatingApp.API.Data
             _context = context;
             _mapper = mapper; 
         }
+
+        public void DeleteLike(UserLike userLike)
+        {
+            _context.Likes.Remove(userLike);
+        }
+
         public async Task<UserLike> GetUserLike(int sourceUserId, int likedUserId)
         {
             return await _context.Likes.FindAsync(sourceUserId, likedUserId);

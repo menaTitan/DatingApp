@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Member } from 'src/app/_models/member';
 import { Message } from 'src/app/_models/message';
 import { User } from 'src/app/_models/user';
@@ -26,7 +26,7 @@ export class MemberDetailsComponent implements OnInit, OnDestroy {
   galleryImages: NgxGalleryImage[];
   messages : Message[] = [];
   user : User;
-
+  userAlreadyLiked : boolean;
   constructor(private memberService : MembersService, private route: ActivatedRoute, 
     private toastr : ToastrService, private messageService: MessageService, 
     public presence : PresenceService, private accountService : AccountService, private router: Router) { 
@@ -55,6 +55,7 @@ export class MemberDetailsComponent implements OnInit, OnDestroy {
       },
      ];
      this.galleryImages = this.getImages(); 
+     this.isUserAlreadyLiked(this.member);
   }
 
 
@@ -72,11 +73,22 @@ export class MemberDetailsComponent implements OnInit, OnDestroy {
   
 addLike(member: Member){
     this.memberService.addLike(member.username).subscribe(() =>{
+      this.isUserAlreadyLiked(member);
       this.toastr.success(`You have liked ${member.knownAs}`);
     });
 }
 
-
+unlike(member:Member){
+  this.memberService.unlike(member.username).subscribe(() =>{
+    this.isUserAlreadyLiked(member);
+    this.toastr.success(`You have unliked ${member.knownAs}`);
+  })
+}
+isUserAlreadyLiked(member: Member){
+   this.memberService.isUserAlreadyLiked(member).subscribe((response)=> {
+     this.userAlreadyLiked = response.length !== 0;
+  })
+}
 loadMessages(){
   this.messageService.getMessageThread(this.member.username).subscribe(messages => {
     this.messages = messages;

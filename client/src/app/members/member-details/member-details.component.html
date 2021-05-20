@@ -31,7 +31,8 @@
     
                 <div class="card-footer">
                     <div class="btn-group d-flex">
-                        <button class="btn btn-primary" (click)="addLike(member)">Like</button>
+                        <button *ngIf="userAlreadyLiked !== true" class="btn btn-primary" (click)="addLike(member)">Like</button>
+                        <button *ngIf="userAlreadyLiked === true" class="btn btn-primary" (click)="unlike(member)">Unlike</button>
                         <button class="btn btn-success" (click)="selectTab(3)">Message</button>
                     </div>
                 </div>

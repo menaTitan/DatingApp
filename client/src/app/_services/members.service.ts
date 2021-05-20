@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { of, pipe } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Likes } from '../_models/likes';
 import {Member} from '../_models/member';
 import { PaginatedResult } from '../_models/pagination';
 import { User } from '../_models/user';
@@ -94,5 +95,15 @@ export class MembersService {
     params = params.append('predicate', predicate);
     return getPaginatedResult<Partial<Member[]>>(`${this.baseUrl}likes`, params, this.http);
   }
+  unlike(username: string){
+    return this.http.delete(`${this.baseUrl}likes/${username}`);
+  }
 
+  isUserAlreadyLiked(member: Member){
+      return this.http.get(`${this.baseUrl}likes?predicate=liked`).pipe(
+       map((response : Likes[]) => {
+        return response = response.filter(value => value.username === member.username);
+      })
+    )
+  }
 }
